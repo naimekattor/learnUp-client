@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { IoIosStar } from 'react-icons/io';
+import { Link } from 'react-router';
 
 
 
@@ -25,9 +26,11 @@ const TutorCard = ({ tutor }) => (
       <p className="text-gray-700 mt-2 text-sm">{tutor.description}</p>
       <div className="mt-4 flex justify-between items-center">
         <p className="text-lg font-bold text-gray-900">${tutor.rate.toFixed(2)}/hr</p>
-        <button className="px-5 py-2 bg-indigo-600 text-white font-semibold rounded-lg shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition-colors duration-200">
-          View Details
-        </button>
+        <Link to={`/tutor/${tutor.id}`}>
+          <button className="px-5 py-2 bg-indigo-600 text-white font-semibold rounded-lg shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition-colors duration-200">
+            View Details
+          </button>
+        </Link>
       </div>
     </div>
   </div>

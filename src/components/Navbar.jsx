@@ -30,7 +30,7 @@ const Navbar = () => {
           {user &&
             <>
               <li>
-                <NavLink to={'/add-tutorials'}>Add Tutorials
+                <NavLink to={'/add-tutorial'}>Add Tutorials
                 </NavLink>
               </li>
               <li>

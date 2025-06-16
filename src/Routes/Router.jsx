@@ -6,6 +6,8 @@ import Login from "../pages/Login";
 import Register from "../pages/Register";
 import NotFoundPage from './../pages/NotFoundPage';
 import FindTutors from "../pages/FindTutors";
+import TutorDetails from "../pages/TutorDetails";
+import AddTutorial from "../pages/AddTutorial";
 
 const Router = createBrowserRouter([
   {
@@ -20,12 +22,16 @@ const Router = createBrowserRouter([
         path: "find-tutors",
         Component: FindTutors,
       },
+      {
+        path: "tutor/:id",
+        Component: TutorDetails,
+      },
       // },
-      // {
-      //   path: "tips",
-      //   Component: TipsPage,
-      //   loader: async () => { return await fetch('https://greenworld-server.onrender.com/tips').then(res => res.json()) }
-      // },
+      {
+        path: "add-tutorial",
+        Component: AddTutorial,
+        //loader: async () => { return await fetch('https://greenworld-server.onrender.com/tips').then(res => res.json()) }
+      },
       // {
       //   path: "share-tip",
       //   Component: ShareTip,
