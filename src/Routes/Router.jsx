@@ -27,6 +27,7 @@ const Router = createBrowserRouter([
       {
         path: "tutor/:id",
         Component: TutorDetails,
+        loader: async ({ params }) => { return await fetch(`http://localhost:4000/tutor/${params.id}`).then(res => res.json()) }
       },
       // },
       {

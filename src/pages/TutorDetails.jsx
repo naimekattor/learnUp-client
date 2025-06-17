@@ -1,9 +1,21 @@
 import React, { useContext } from 'react';
 import { AuthContext } from '../context/AuthProvider';
+import { useParams } from 'react-router';
 
 // Main App component
 const TutorDetails = () => {
   const { user } = useContext(AuthContext);
+  const param = new URLSearchParams(window.location.search);
+  const { tutorId } = useParams();
+  console.log(tutorId);
+
+  console.log(param);
+
+  const handleBooking = () => {
+    const bookingData = {
+      tutorName: 'naim'
+    }
+  }
   return (
     <div className="min-h-screen bg-gray-100 py-8 px-4 sm:px-6 lg:px-8 font-sans">
       <div className="max-w-4xl mx-auto bg-white shadow-lg rounded-xl overflow-hidden">
@@ -108,10 +120,10 @@ const TutorDetails = () => {
               </ul>
 
               {/* Login/Booking Button */}
-              <button className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-6 rounded-lg transition duration-300 ease-in-out transform hover:scale-105 shadow-md">
+              <button className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-6 rounded-lg transition duration-300 ease-in-out transform hover:scale-105 shadow-md" >
                 {
                   user ? (
-                    <span>Book Now</span>
+                    <span onClick={handleBooking}>Book Now</span>
                   ) : (
                     <span>Login to Book</span>
                   )
