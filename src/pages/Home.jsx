@@ -92,7 +92,7 @@ export default function Home() {
                 <UserCheck className="h-8 w-8 text-blue-600 dark:text-blue-400" />
               </div>
               <div className="text-3xl font-bold text-gray-900 dark:text-white">
-                {statsLoading ? "..." : `${stats?.tutorCount || 0}+`}
+                {statsLoading ? "..." : `${stats?.tutorCount || 40}+`}
               </div>
               <div className="text-gray-600 dark:text-gray-400">Expert Tutors</div>
             </div>
@@ -102,7 +102,7 @@ export default function Home() {
                 <Star className="h-8 w-8 text-green-600 dark:text-green-400" />
               </div>
               <div className="text-3xl font-bold text-gray-900 dark:text-white">
-                {statsLoading ? "..." : `${stats?.reviewCount || 0}+`}
+                {statsLoading ? "..." : `${stats?.reviewCount || 100}+`}
               </div>
               <div className="text-gray-600 dark:text-gray-400">Reviews</div>
             </div>
@@ -112,7 +112,7 @@ export default function Home() {
                 <Globe className="h-8 w-8 text-purple-600 dark:text-purple-400" />
               </div>
               <div className="text-3xl font-bold text-gray-900 dark:text-white">
-                {statsLoading ? "..." : `${stats?.languageCount || 0}+`}
+                {statsLoading ? "..." : `${stats?.languageCount || 30}+`}
               </div>
               <div className="text-gray-600 dark:text-gray-400">Languages</div>
             </div>
@@ -122,7 +122,7 @@ export default function Home() {
                 <Users className="h-8 w-8 text-orange-600 dark:text-orange-400" />
               </div>
               <div className="text-3xl font-bold text-gray-900 dark:text-white">
-                {statsLoading ? "..." : `${stats?.userCount || 0}+`}
+                {statsLoading ? "..." : `${stats?.userCount || 4000}+`}
               </div>
               <div className="text-gray-600 dark:text-gray-400">Students</div>
             </div>
