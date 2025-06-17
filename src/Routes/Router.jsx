@@ -22,6 +22,7 @@ const Router = createBrowserRouter([
       {
         path: "find-tutors",
         Component: FindTutors,
+        loader: async () => { return await fetch('http://localhost:4000/my-tutorials').then(res => res.json()) }
       },
       {
         path: "tutor/:id",

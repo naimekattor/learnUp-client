@@ -6,7 +6,7 @@ import { AuthContext } from '../context/AuthProvider';
 const MyTutorials = () => {
   const tutorials = useLoaderData();
   const [initialTutorialsData] = useState(tutorials);
-  const [tutorialsData, setTutorialsData] = useState(tutorials);
+  const [tutorialsData, setTutorialsData] = useState([]);
   const [selectedTutorial, setSelectedTutorial] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -15,13 +15,14 @@ const MyTutorials = () => {
   console.log(user);
 
   useEffect(() => {
-    if (user?.email) {
-      const data = initialTutorialsData.filter((data) => data.email === user.email);
-      setTutorialsData(data.length > 0 ? data : initialTutorialsData);
-      setLoading(false);
-    }
+    if (!user) return;
 
-  }, [user, initialTutorialsData]);
+    const filtered = tutorials.filter((data) => data.yourEmail === user.email);
+    setTutorialsData(filtered);
+    setLoading(false);
+  }, [user, tutorials]);
+
+
 
 
   // handle popup
@@ -43,7 +44,7 @@ const MyTutorials = () => {
       confirmButtonText: "Yes, delete it!"
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`https://greenworld-server.onrender.com/tips/${id}`, {
+        fetch(`http://localhost:4000/my-tutorials/${id}`, {
           method: 'DELETE',
           headers: {
             'Content-Type': 'application/json'
@@ -139,60 +140,69 @@ const MyTutorials = () => {
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
-              {tutorialsData.map((tutorial) => (
-                <tr key={tutorial._id} className="hover:bg-gray-50">
-                  <td className="px-3 py-4 whitespace-nowrap">
-                    <div className="flex items-center">
-                      <div className="flex-shrink-0 h-16 w-16">
-                        <img
-                          className="h-full w-full rounded-md object-cover"
-                          src={tutorial.tutorialImageUrl}
-                          alt={`${tutorial.language} tutorial`}
-                          onError={(e) => {
-                            e.target.onerror = null;
-                            e.target.src = "https://placehold.co/80x80/cccccc/333333?text=Error";
-                          }}
-                        />
+              {
+                tutorialsData.length === 0 ? (
+                  <tr>
+                    <td colSpan="6" className="text-center py-10 text-gray-500 text-lg">
+                      No tutorials found for your account.
+                    </td>
+                  </tr>
+                ) : (tutorialsData.map((tutorial) => (
+                  <tr key={tutorial._id} className="hover:bg-gray-50">
+                    <td className="px-3 py-4 whitespace-nowrap">
+                      <div className="flex items-center">
+                        <div className="flex-shrink-0 h-16 w-16">
+                          <img
+                            className="h-full w-full rounded-md object-cover"
+                            src={tutorial.tutorialImageUrl}
+                            alt={`${tutorial.language} tutorial`}
+                            onError={(e) => {
+                              e.target.onerror = null;
+                              e.target.src = "https://placehold.co/80x80/cccccc/333333?text=Error";
+                            }}
+                          />
+                        </div>
                       </div>
-                    </div>
-                  </td>
-                  <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-900 capitalize">
-                    {tutorial.language}
-                  </td>
-                  <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-900">
-                    {tutorial.pricePerHour}
-                  </td>
-                  <td className="px-3 py-4 text-sm text-gray-700 max-w-xs truncate">
-                    {tutorial.description}
-                  </td>
-                  <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-500">
-                    <div className="flex items-center space-x-1">
-                      <span className="text-yellow-400">★</span>
-                      <span>{tutorial.reviews}</span>
-                    </div>
-                  </td>
-                  <td className="px-3 py-4 whitespace-nowrap text-right text-sm font-medium">
-                    <div className="flex items-center space-x-2">
-                      <button
-                        onClick={() => handlePopup(tutorial._id)}
-                        className="p-2 rounded-full bg-blue-100 text-blue-600 hover:bg-blue-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition duration-150 ease-in-out"
-                        title="Edit Tutorial"
-                      >
-                        {/* Edit Icon */}
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-edit"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
-                      </button>
-                      <button
-                        onClick={() => handleTutorialDelete(tutorial._id)}
-                        className="p-2 rounded-full bg-red-100 text-red-600 hover:bg-red-200 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50 transition duration-150 ease-in-out"
-                        title="Delete Tutorial"
-                      >
-                        {/* Trash Icon */}
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-trash"><path d="M3 6h18"></path><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path></svg>
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              ))}
+                    </td>
+                    <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-900 capitalize">
+                      {tutorial.language}
+                    </td>
+                    <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-900">
+                      {tutorial.pricePerHour}
+                    </td>
+                    <td className="px-3 py-4 text-sm text-gray-700 max-w-xs truncate">
+                      {tutorial.description}
+                    </td>
+                    <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-500">
+                      <div className="flex items-center space-x-1">
+                        <span className="text-yellow-400">★</span>
+                        <span>{tutorial.reviews}</span>
+                      </div>
+                    </td>
+                    <td className="px-3 py-4 whitespace-nowrap text-right text-sm font-medium">
+                      <div className="flex items-center space-x-2">
+                        <button
+                          onClick={() => handlePopup(tutorial._id)}
+                          className="p-2 rounded-full bg-blue-100 text-blue-600 hover:bg-blue-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition duration-150 ease-in-out"
+                          title="Edit Tutorial"
+                        >
+                          {/* Edit Icon */}
+                          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-edit"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                        </button>
+                        <button
+                          onClick={() => handleTutorialDelete(tutorial._id)}
+                          className="p-2 rounded-full bg-red-100 text-red-600 hover:bg-red-200 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50 transition duration-150 ease-in-out"
+                          title="Delete Tutorial"
+                        >
+                          {/* Trash Icon */}
+                          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-trash"><path d="M3 6h18"></path><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path></svg>
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                )))
+              }
+
             </tbody>
           </table>
         </div>

@@ -1,37 +1,17 @@
 import React, { useState } from 'react'
 import { IoSearchOutline } from 'react-icons/io5';
 import TutorCard from '../components/TutorCard';
-// Mock data for the tutors. In a real application, this would come from an API.
-const tutors = [
-  {
-    id: 1,
-    name: 'Pierre Dubois',
-    reviews: 156,
-    language: 'French',
-    description: 'Native French speaker from Paris. Expertise in French literature and professional communication.',
-    rate: 28.00,
-    imageUrl: 'https://placehold.co/400x400/E2E8F0/4A5568?text=Tutor',
-  },
-  {
-    id: 2,
-    name: 'David Martinez',
-    reviews: 127,
-    language: 'Spanish',
-    description: 'Native Spanish speaker with 5+ years of teaching experience. Specializes in conversation and business Spanish.',
-    rate: 25.00,
-    imageUrl: 'https://placehold.co/400x400/E2E8F0/4A5568?text=Tutor',
-  },
-  {
-    id: 3,
-    name: 'Sophie Müller',
-    reviews: 98,
-    language: 'German',
-    description: 'Certified German teacher with a focus on immersive learning techniques for all levels.',
-    rate: 30.00,
-    imageUrl: 'https://placehold.co/400x400/E2E8F0/4A5568?text=Tutor',
-  }
-];
+import { useLoaderData } from 'react-router';
+
+
 const FindTutors = () => {
+  const rawTutors = useLoaderData();
+  const tutors = rawTutors.map(tutor => ({
+    ...tutor,
+    rate: parseFloat(tutor.pricePerHour),
+    reviews: Math.floor(Math.random() * 100),  // Temporary mock if reviews not available
+    rating: (Math.random() * 2 + 3).toFixed(1)  // Random between 3.0 and 5.0
+  }));
   // State to manage the form inputs
   const [language, setLanguage] = useState('');
   const [minPrice, setMinPrice] = useState('');
@@ -48,8 +28,8 @@ const FindTutors = () => {
   const filteredTutorials = tutors.filter((tutor) => {
     return (
       (language ? tutor.language.toLowerCase().includes(language.toLowerCase()) : true) &&
-      (minPrice ? tutor.rate >= parseFloat(minPrice) : true) &&
-      (maxPrice ? tutor.rate <= parseFloat(maxPrice) : true) &&
+      (minPrice ? tutor.pricePerHour >= parseFloat(minPrice) : true) &&
+      (maxPrice ? tutor.pricePerHour <= parseFloat(maxPrice) : true) &&
       (minReviews === 'any' || tutor.reviews >= parseInt(minReviews))
     );
   })

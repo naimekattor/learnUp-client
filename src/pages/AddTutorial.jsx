@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Swal from 'sweetalert2';
+import { AuthContext } from '../context/AuthProvider';
 
-// NewTutorialForm component for adding a new tutorial
 const AddTutorial = () => {
-  // State variables to hold form data
   const [formData, setFormData] = useState({
     yourName: '',
     yourEmail: '',
@@ -13,7 +12,21 @@ const AddTutorial = () => {
     description: '',
   });
 
-  // Handle input changes
+  const { user } = useContext(AuthContext);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // Auto-fill name and email from logged-in user
+  useEffect(() => {
+    if (user) {
+      setFormData((prev) => ({
+        ...prev,
+        yourName: user.displayName || '',
+        yourEmail: user.email || '',
+      }));
+    }
+  }, [user]);
+
+  // Handle input change
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
@@ -23,49 +36,55 @@ const AddTutorial = () => {
   };
 
   // Handle form submission
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // In a real application, you would send this data to a backend or handle it here
-    fetch('http://localhost:4000/tutorials', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(formData),
-    })
+    setIsSubmitting(true);
 
-      .then(res => res.json())
-      .then(data => {
-        if (data.acknowledged) {
-          formData.reset();
-          Swal.fire({
-            position: "top-end",
-            icon: "success",
-            title: "Your garden tip has been shared successfully",
-            text: "Thank you for contributing to the gardening community!",
-            showConfirmButton: false,
-            timer: 1500
-          });
-        } else {
-          Swal.fire({
-            title: "Something went wrong",
-            text: data.message || "Please try again later.",
-            icon: "error"
-          });
-        }
+    try {
+      const res = await fetch('http://localhost:4000/tutorials', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await res.json();
+
+      if (data.acknowledged) {
+        setFormData({
+          yourName: user?.displayName || '',
+          yourEmail: user?.email || '',
+          tutorialImageUrl: '',
+          language: '',
+          pricePerHour: '',
+          description: '',
+        });
+
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: 'Tutorial added successfully!',
+          text: 'Thanks for sharing your skills!',
+          showConfirmButton: false,
+          timer: 2000,
+        });
+      } else {
+        Swal.fire({
+          title: 'Something went wrong',
+          text: data.message || 'Please try again later.',
+          icon: 'error',
+        });
       }
-      )
-    console.log('Tutorial Data Submitted:', formData);
-    // You could also add logic to display a success message or clear the form
-    alert('Tutorial added successfully! Check the console for data.'); // Using alert for demo, replace with custom modal
-    setFormData({
-      yourName: '',
-      yourEmail: '',
-      tutorialImageUrl: '',
-      language: '',
-      pricePerHour: '',
-      description: '',
-    });
+    } catch (error) {
+      Swal.fire({
+        title: 'Network Error',
+        text: error.message || 'Unable to submit tutorial.',
+        icon: 'error',
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -85,10 +104,11 @@ const AddTutorial = () => {
                 type="text"
                 id="yourName"
                 name="yourName"
+                readOnly
                 value={formData.yourName}
                 onChange={handleChange}
-                placeholder="naim"
-                className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm transition duration-150 ease-in-out"
+                placeholder="Your Name"
+                className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm cursor-not-allowed"
                 required
               />
             </div>
@@ -99,11 +119,13 @@ const AddTutorial = () => {
               <input
                 type="email"
                 id="yourEmail"
+
                 name="yourEmail"
                 value={formData.yourEmail}
                 onChange={handleChange}
-                placeholder="naim@gmail.com"
-                className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm transition duration-150 ease-in-out"
+                readOnly // Email is read-only
+                placeholder="Your Email"
+                className="mt-1 block w-full px-4 py-2 cursor-not-allowed bg-gray-100 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                 required
               />
             </div>
@@ -121,7 +143,7 @@ const AddTutorial = () => {
               value={formData.tutorialImageUrl}
               onChange={handleChange}
               placeholder="Enter image URL for your tutorial"
-              className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm transition duration-150 ease-in-out"
+              className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
             />
           </div>
 
@@ -137,7 +159,7 @@ const AddTutorial = () => {
               value={formData.language}
               onChange={handleChange}
               placeholder="e.g., English, Spanish, French"
-              className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm transition duration-150 ease-in-out"
+              className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
               required
             />
           </div>
@@ -156,7 +178,7 @@ const AddTutorial = () => {
               placeholder="25.00"
               step="0.01"
               min="0"
-              className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm transition duration-150 ease-in-out"
+              className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
               required
             />
           </div>
@@ -172,8 +194,8 @@ const AddTutorial = () => {
               value={formData.description}
               onChange={handleChange}
               rows="4"
-              placeholder="Describe your teaching experience, methodology, and what students can expect from your lessons..."
-              className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm transition duration-150 ease-in-out resize-y"
+              placeholder="Describe your teaching experience, methodology, and what students can expect..."
+              className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm resize-y"
               required
             ></textarea>
           </div>
@@ -182,9 +204,10 @@ const AddTutorial = () => {
           <div>
             <button
               type="submit"
-              className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition duration-300 ease-in-out transform hover:scale-105 shadow-md"
+              disabled={isSubmitting}
+              className={`w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition duration-300 ease-in-out transform hover:scale-105 shadow-md ${isSubmitting ? 'opacity-50 cursor-not-allowed' : ''}`}
             >
-              Add Tutorial
+              {isSubmitting ? 'Submitting...' : 'Add Tutorial'}
             </button>
           </div>
         </form>
