@@ -1,15 +1,11 @@
 import React, { useContext } from 'react';
 import { AuthContext } from '../context/AuthProvider';
-import { useParams } from 'react-router';
+import { useLoaderData } from 'react-router';
 
 // Main App component
 const TutorDetails = () => {
   const { user } = useContext(AuthContext);
-  const param = new URLSearchParams(window.location.search);
-  const { tutorId } = useParams();
-  console.log(tutorId);
-
-  console.log(param);
+  const tutorDetails = useLoaderData();
 
   const handleBooking = () => {
     const bookingData = {
@@ -36,8 +32,8 @@ const TutorDetails = () => {
 
           {/* Profile Details and Rating */}
           <div className="flex-grow">
-            <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-2">Maria Chen</h1>
-            <p className="text-xl text-indigo-600 font-semibold mb-3">Chinese Teacher</p>
+            <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-2">{tutorDetails.yourName}</h1>
+            <p className="text-xl text-indigo-600 font-semibold mb-3">{tutorDetails.language} Teacher</p>
             <div className="flex items-center mb-4 space-x-2">
               {/* Star Rating - Using Unicode stars for simplicity */}
               <span className="text-yellow-500 text-lg">★★★★★</span>
@@ -52,7 +48,7 @@ const TutorDetails = () => {
                 Professional Teacher
               </span>
               <span className="bg-indigo-100 text-indigo-800 text-xs font-medium px-3 py-1 rounded-full">
-                Chinese Expert
+                {tutorDetails.language} Expert
               </span>
             </div>
             {/* Bio */}
@@ -70,19 +66,19 @@ const TutorDetails = () => {
 
             {/* Professional Chinese Instructor */}
             <div className="mb-8 p-4 bg-gray-50 rounded-lg shadow-sm">
-              <h3 className="text-xl font-semibold text-gray-800 mb-2">Professional Chinese Instructor</h3>
+              <h3 className="text-xl font-semibold text-gray-800 mb-2">Professional {tutorDetails.language} Instructor</h3>
               <p className="text-gray-600 mb-3 text-sm">Language Academy • 2020-Present</p>
               <p className="text-gray-700 leading-relaxed">
-                Teaching Chinese to students of all levels with personalized approaches and proven methodologies.
+                Teaching {tutorDetails.language} to students of all levels with personalized approaches and proven methodologies.
               </p>
             </div>
 
             {/* Online Chinese Tutor */}
             <div className="p-4 bg-gray-50 rounded-lg shadow-sm">
-              <h3 className="text-xl font-semibold text-gray-800 mb-2">Online Chinese Tutor</h3>
+              <h3 className="text-xl font-semibold text-gray-800 mb-2">Online {tutorDetails.language} Tutor</h3>
               <p className="text-gray-600 mb-3 text-sm">Freelance • 2018-2020</p>
               <p className="text-gray-700 leading-relaxed">
-                Provided personalized Chinese lessons to students worldwide via online platforms.
+                Provided personalized {tutorDetails.language} lessons to students worldwide via online platforms.
               </p>
             </div>
           </div>
@@ -92,7 +88,7 @@ const TutorDetails = () => {
             <div>
               {/* Hourly Rate */}
               <div className="mb-6 pb-4 border-b border-gray-200">
-                <p className="text-4xl font-bold text-gray-900 mb-1">$30.00</p>
+                <p className="text-4xl font-bold text-gray-900 mb-1">${tutorDetails.pricePerHour}</p>
                 <p className="text-sm text-gray-600">per hour</p>
               </div>
 
