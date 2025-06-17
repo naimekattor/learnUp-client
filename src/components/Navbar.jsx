@@ -12,7 +12,7 @@ const Navbar = () => {
 
   return (
     <header className=' py-4' >
-      <div className='flex justify-between items-center bg-white p-4 md:w-9/12 w-11/12 mx-auto rounded-full'>
+      <div className='flex justify-between items-center bg-white p-2 md:w-9/12 w-11/12 mx-auto rounded-full'>
         <div className='font-bold text-primary text-3xl'>
           <span className='md:hidden block text-2xl' onClick={() => setShowMenu(!showMenu)}><FaBarsStaggered /></span>
           <div className='md:block hidden'>
