@@ -10,6 +10,7 @@ import TutorDetails from "../pages/TutorDetails";
 import AddTutorial from "../pages/AddTutorial";
 import MyTutorials from "../pages/MyTutorials";
 import BookedTutors from "../pages/BookedTutors";
+import ProtectedRoute from "./ProtectedRoute";
 
 const Router = createBrowserRouter([
   {
@@ -23,43 +24,35 @@ const Router = createBrowserRouter([
       {
         path: "find-tutors",
         Component: FindTutors,
-        loader: async () => { return await fetch('http://localhost:4000/my-tutorials').then(res => res.json()) }
+        loader: async () => { return await fetch('https://learnup-server-73jb.onrender.com/my-tutorials').then(res => res.json()) }
       },
       {
         path: "tutor/:id",
-        Component: TutorDetails,
-        loader: async ({ params }) => { return await fetch(`http://localhost:4000/tutor/${params.id}`).then(res => res.json()) }
+        element: <ProtectedRoute><TutorDetails /></ProtectedRoute>,
+        loader: async ({ params }) => { return await fetch(`https://learnup-server-73jb.onrender.com/tutor/${params.id}`).then(res => res.json()) }
       },
-      // },
+
       {
         path: "add-tutorial",
-        Component: AddTutorial,
-        //loader: async () => { return await fetch('https://greenworld-server.onrender.com/tips').then(res => res.json()) }
+        element: <ProtectedRoute><AddTutorial /></ProtectedRoute>,
+
       },
       {
         path: "/my-tutorials",
-        Component: MyTutorials,
-        loader: async () => { return await fetch('http://localhost:4000/my-tutorials').then(res => res.json()) }
+        element: <ProtectedRoute><MyTutorials /></ProtectedRoute>,
+        loader: async () => { return await fetch('https://learnup-server-73jb.onrender.com/my-tutorials').then(res => res.json()) }
 
       },
       {
         path: "booked-tutors",
-        element: <BookedTutors />,
+        element: <ProtectedRoute><BookedTutors /></ProtectedRoute>,
         loader: async () => {
-          const res = await fetch(`http://localhost:4000/booked-tutors`)
+          const res = await fetch(`https://learnup-server-73jb.onrender.com/booked-tutors`)
           return res.json();
         }
       },
 
-      // },
-      // {
-      //   path: "my-tips",
-      //   element: <ProtectedRoute><MyTips /></ProtectedRoute>,
-      //   loader: async () => { return await fetch('https://greenworld-server.onrender.com/tips').then(res => res.json()) }
 
-
-
-      // },
       {
         path: '/auth',
         Component: AuthLayOut,

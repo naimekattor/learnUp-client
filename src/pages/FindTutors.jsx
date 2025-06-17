@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { IoSearchOutline } from 'react-icons/io5';
 import TutorCard from '../components/TutorCard';
-import { useLoaderData } from 'react-router';
+import { useLoaderData, useSearchParams } from 'react-router';
 
 
 const FindTutors = () => {
@@ -9,15 +9,21 @@ const FindTutors = () => {
   const tutors = rawTutors.map(tutor => ({
     ...tutor,
     rate: parseFloat(tutor.pricePerHour),
-    reviews: Math.floor(Math.random() * 100),  // Temporary mock if reviews not available
-    rating: (Math.random() * 2 + 3).toFixed(1)  // Random between 3.0 and 5.0
+    reviews: Math.floor(Math.random() * 100),
+    rating: (Math.random() * 2 + 3).toFixed(1)
   }));
+  const [searchParams] = useSearchParams();
+  const languageParams = searchParams.get('language');
+  console.log(languageParams);
   // State to manage the form inputs
-  const [language, setLanguage] = useState('');
+  const [language, setLanguage] = useState(languageParams || '');
   const [minPrice, setMinPrice] = useState('');
   const [maxPrice, setMaxPrice] = useState('');
   const [minReviews, setMinReviews] = useState('any');
   const [sortBy, setSortBy] = useState('popular');
+
+
+
   // Function to reset all filters to their default state
   const handleClearFilters = () => {
     setLanguage('');
@@ -43,7 +49,7 @@ const FindTutors = () => {
       case 'rate_desc':
         return b.rate - a.rate;
       case 'rating':
-        return b.reviews - a.reviews; // Assuming reviews is the rating count
+        return b.reviews - a.reviews;
       default:
         return 0;
     }
@@ -137,7 +143,7 @@ const FindTutors = () => {
               <div className="flex flex-col md:flex-row justify-between items-center mb-6">
                 <div>
                   <h1 className="text-3xl font-bold text-gray-800">Find Tutors</h1>
-                  <p className="text-gray-600 mt-1">{tutors.length} tutors found</p>
+                  <p className="text-gray-600 mt-1">{filteredTutorials.length} tutors found</p>
                 </div>
                 <div className="flex items-center mt-4 md:mt-0">
                   <label htmlFor="sort" className="text-sm font-semibold text-gray-600 mr-2">Sort by:</label>

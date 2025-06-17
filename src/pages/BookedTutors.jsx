@@ -45,7 +45,7 @@ const BookedTutors = () => {
 
                 <div className="flex justify-between items-center mb-4">
                   <p className="text-lg font-semibold text-gray-900">${tutor.pricePerHour}/hr</p>
-                  <p className="text-gray-500 text-sm">Booked: {tutor?.bookedDate}</p>
+                  <p className="text-gray-500 text-sm">Booked: {tutor?.date}</p>
                 </div>
 
                 {/* Leave Review Button */}

@@ -9,9 +9,9 @@ const Footer = () => {
       <div className="flex md:flex-row flex-col justify-between max-w-9/12 mx-auto ">
         <nav className='flex flex-col'>
           <h6 className="footer-title">Services</h6>
-          <a className="link link-hover">Branding</a>
-          <a className="link link-hover">Design</a>
-          <a className="link link-hover">Marketing</a>
+          <a className="link link-hover">Tutoring</a>
+          <a className="link link-hover">Education</a>
+          <a className="link link-hover">Competition</a>
           <a className="link link-hover">Advertisement</a>
         </nav>
         <nav className='flex flex-col'>
@@ -30,19 +30,19 @@ const Footer = () => {
         <div>
           <h6 className="text-sm font-semibold text-gray-400 uppercase mb-4">Follow Us</h6>
           <div className="flex space-x-4 mb-6">
-            <a href="https://facebook.com/naimekattor" target="_blank" className="bg-secondary hover:bg-white text-primary rounded-full p-2">
+            <a href="https://facebook.com/naimekattor" target="_blank" className="bg-white hover:bg-white text-primary rounded-full p-2">
               <FaFacebookF className="w-5 h-5" />
             </a>
-            <a href="https://instagram.com/naimekattor" target="_blank" className="bg-secondary hover:bg-white text-primary rounded-full p-2">
+            <a href="https://instagram.com/naimekattor" target="_blank" className="bg-white hover:bg-white text-primary rounded-full p-2">
               <FaInstagram className="w-5 h-5" />
             </a>
-            <a href="https://twitter.com/naimekattor" target="_blank" className="bg-secondary hover:bg-white text-primary rounded-full p-2">
+            <a href="https://twitter.com/naimekattor" target="_blank" className="bg-white hover:bg-white text-primary rounded-full p-2">
               <FaTwitter className="w-5 h-5" />
             </a>
-            <a href="https://linkedin.com/in/naimekattor" target="_blank" className="bg-secondary hover:bg-white text-primary rounded-full p-2">
+            <a href="https://linkedin.com/in/naimekattor" target="_blank" className="bg-white hover:bg-white text-primary rounded-full p-2">
               <FaLinkedinIn className="w-5 h-5" />
             </a>
-            <a href="https://www.youtube.com/@NaimTheVai" target="_blank" className="bg-secondary hover:bg-white text-primary rounded-full p-2">
+            <a href="https://www.youtube.com/@NaimTheVai" target="_blank" className="bg-white hover:bg-white text-primary rounded-full p-2">
               <FaYoutube className="w-5 h-5" />
             </a>
           </div>
@@ -50,11 +50,11 @@ const Footer = () => {
           <div>
             <h6 className="text-sm font-semibold text-gray-400 uppercase mb-2">Download Mobile App</h6>
             <div className="flex space-x-2">
-              <a href="#" className="bg-secondary hover:bg-white text-primary rounded-md p-2 flex items-center text-sm">
+              <a href="#" className="bg-white hover:bg-white text-primary rounded-md p-2 flex items-center text-sm">
                 <AiFillApple className="w-5 h-5 mr-2" />
                 App Store
               </a>
-              <a href="#" className="bg-secondary hover:bg-white text-primary rounded-md p-2 flex items-center text-sm">
+              <a href="#" className="bg-white hover:bg-white text-primary rounded-md p-2 flex items-center text-sm">
                 <AiFillAndroid className="w-5 h-5 mr-2" />
                 Google Play
               </a>
