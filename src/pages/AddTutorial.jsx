@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Swal from 'sweetalert2';
 
 // NewTutorialForm component for adding a new tutorial
 const AddTutorial = () => {
@@ -25,6 +26,35 @@ const AddTutorial = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     // In a real application, you would send this data to a backend or handle it here
+    fetch('http://localhost:4000/tutorials', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(formData),
+    })
+
+      .then(res => res.json())
+      .then(data => {
+        if (data.acknowledged) {
+          formData.reset();
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "Your garden tip has been shared successfully",
+            text: "Thank you for contributing to the gardening community!",
+            showConfirmButton: false,
+            timer: 1500
+          });
+        } else {
+          Swal.fire({
+            title: "Something went wrong",
+            text: data.message || "Please try again later.",
+            icon: "error"
+          });
+        }
+      }
+      )
     console.log('Tutorial Data Submitted:', formData);
     // You could also add logic to display a success message or clear the form
     alert('Tutorial added successfully! Check the console for data.'); // Using alert for demo, replace with custom modal
