@@ -9,6 +9,7 @@ import FindTutors from "../pages/FindTutors";
 import TutorDetails from "../pages/TutorDetails";
 import AddTutorial from "../pages/AddTutorial";
 import MyTutorials from "../pages/MyTutorials";
+import BookedTutors from "../pages/BookedTutors";
 
 const Router = createBrowserRouter([
   {
@@ -41,13 +42,14 @@ const Router = createBrowserRouter([
         loader: async () => { return await fetch('http://localhost:4000/my-tutorials').then(res => res.json()) }
 
       },
-      // {
-      //   path: "tips/:id",
-      //   element: <ProtectedRoute><TipsDetailsPage /></ProtectedRoute>,
-      //   loader: async ({ params }) => {
-      //     const res = await fetch(`https://greenworld-server.onrender.com/share-tip/${params.id}`)
-      //     return res.json();
-      //   }
+      {
+        path: "booked-tutors",
+        element: <BookedTutors />,
+        loader: async () => {
+          const res = await fetch(`http://localhost:4000/booked-tutors`)
+          return res.json();
+        }
+      },
 
       // },
       // {

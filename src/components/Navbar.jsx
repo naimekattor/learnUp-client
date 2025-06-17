@@ -38,7 +38,7 @@ const Navbar = () => {
                 </NavLink>
               </li>
               <li>
-                <NavLink to={'/my-booked-tutors'}>My booked tutors
+                <NavLink to={'/booked-tutors'}>My booked tutors
                 </NavLink>
               </li></>
           }

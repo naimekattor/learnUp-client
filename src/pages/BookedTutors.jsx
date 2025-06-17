@@ -1,0 +1,117 @@
+import React from 'react';
+
+// Main App component
+const BookedTutors = () => {
+  // Sample data for booked tutors. In a real application, this would come from an API.
+  const bookedTutors = [
+    {
+      id: 1,
+      name: "French Tutor",
+      language: "French",
+      tutorEmail: "pierre@example.com",
+      price: "$28.00/hr",
+      bookedDate: "6/17/2025",
+      imageUrl: "https://placehold.co/300x200/cccccc/333333?text=Tutor", // Placeholder image
+    },
+    {
+      id: 2,
+      name: "French Tutor",
+      language: "French",
+      tutorEmail: "pierre@example.com",
+      price: "$28.00/hr",
+      bookedDate: "6/17/2025",
+      imageUrl: "https://placehold.co/300x200/cccccc/333333?text=Tutor", // Placeholder image
+    },
+    {
+      id: 3,
+      name: "French Tutor",
+      language: "French",
+      tutorEmail: "pierre@example.com",
+      price: "$28.00/hr",
+      bookedDate: "6/17/2025",
+      imageUrl: "https://placehold.co/300x200/cccccc/333333?text=Tutor", // Placeholder image
+    },
+    {
+      id: 4,
+      name: "Spanish Tutor",
+      language: "Spanish",
+      tutorEmail: "maria@example.com",
+      price: "$30.00/hr",
+      bookedDate: "6/18/2025",
+      imageUrl: "https://placehold.co/300x200/dddddd/444444?text=Tutor", // Placeholder image
+    },
+    {
+      id: 5,
+      name: "German Tutor",
+      language: "German",
+      tutorEmail: "hans@example.com",
+      price: "$32.00/hr",
+      bookedDate: "6/19/2025",
+      imageUrl: "https://placehold.co/300x200/eeeeee/555555?text=Tutor", // Placeholder image
+    },
+  ];
+
+  // Function to handle leaving a review (for demonstration)
+  const handleLeaveReview = (id) => {
+    console.log(`Leaving review for tutor with ID: ${id}`);
+    // In a real app, this would open a review modal or navigate to a review page.
+    alert(`Initiating review for tutor ${id}.`); // Using alert for demo, replace with custom modal
+  };
+
+  return (
+    <div className="min-h-screen bg-gray-100 p-4 sm:p-6 lg:p-8 font-sans">
+      <div className="max-w-6xl mx-auto bg-white shadow-lg rounded-xl overflow-hidden">
+        {/* Header Section */}
+        <div className="p-6 sm:p-8 border-b border-gray-200">
+          <h1 className="text-3xl sm:text-4xl font-bold text-gray-800 mb-2">My Booked Tutors</h1>
+          <p className="text-gray-600 text-lg">Manage your language learning sessions and leave reviews</p>
+        </div>
+
+        {/* Tutors Grid Section */}
+        <div className="p-4 sm:p-6 lg:p-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {bookedTutors.map((tutor) => (
+            <div key={tutor.id} className="bg-white rounded-lg shadow-md overflow-hidden border border-gray-200">
+              {/* Tutor Image */}
+              <img
+                src={tutor.imageUrl}
+                alt={`${tutor.name} profile`}
+                className="w-full h-48 object-cover"
+                onError={(e) => {
+                  e.target.onerror = null;
+                  e.target.src = "https://placehold.co/300x200/cccccc/333333?text=Image+Error";
+                }}
+              />
+
+              {/* Tutor Details */}
+              <div className="p-4">
+                <h2 className="text-xl font-bold text-gray-800 mb-1">{tutor.name}</h2>
+                <p className="text-gray-600 text-sm mb-2">{tutor.language}</p>
+                <p className="text-gray-700 text-sm mb-2">Tutor: {tutor.tutorEmail}</p>
+
+                <div className="flex justify-between items-center mb-4">
+                  <p className="text-lg font-semibold text-gray-900">{tutor.price}</p>
+                  <p className="text-gray-500 text-sm">Booked: {tutor.bookedDate}</p>
+                </div>
+
+                {/* Leave Review Button */}
+                <button
+                  onClick={() => handleLeaveReview(tutor.id)}
+                  className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg flex items-center justify-center space-x-2 transition duration-300 ease-in-out transform hover:scale-105 shadow-md"
+                >
+                  {/* Star Icon for review */}
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-star"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                  <span>Leave Review</span>
+                </button>
+                <p className="text-gray-500 text-xs text-center mt-2">
+                  Click to increase the tutor's review count
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default BookedTutors;
