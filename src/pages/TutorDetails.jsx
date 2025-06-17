@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { AuthContext } from '../context/AuthProvider';
 
 // Main App component
 const TutorDetails = () => {
+  const { user } = useContext(AuthContext);
   return (
     <div className="min-h-screen bg-gray-100 py-8 px-4 sm:px-6 lg:px-8 font-sans">
       <div className="max-w-4xl mx-auto bg-white shadow-lg rounded-xl overflow-hidden">
@@ -107,7 +109,14 @@ const TutorDetails = () => {
 
               {/* Login/Booking Button */}
               <button className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-6 rounded-lg transition duration-300 ease-in-out transform hover:scale-105 shadow-md">
-                Login to Book
+                {
+                  user ? (
+                    <span>Book Now</span>
+                  ) : (
+                    <span>Login to Book</span>
+                  )
+                }
+
               </button>
 
               {/* Cancellation Policy */}
@@ -117,9 +126,12 @@ const TutorDetails = () => {
             </div>
 
             {/* Login prompt (if needed) */}
-            <div className="bg-yellow-50 text-yellow-800 p-4 rounded-lg text-sm mt-6">
-              <p className="text-center">Please log in to book a session with this tutor</p>
-            </div>
+            {
+              !user && <div className="bg-yellow-50 text-yellow-800 p-4 rounded-lg text-sm mt-6">
+                <p className="text-center">Please log in to book a session with this tutor</p>
+              </div>
+            }
+
           </div>
         </div>
       </div>
