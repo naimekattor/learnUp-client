@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { AuthContext } from '../context/AuthProvider';
 import { useLoaderData } from 'react-router';
 import Swal from 'sweetalert2';
@@ -7,8 +7,11 @@ import Swal from 'sweetalert2';
 const TutorDetails = () => {
   const { user } = useContext(AuthContext);
   const tutorDetails = useLoaderData();
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleBooking = async () => {
+    if (isLoading) return;
+    setIsLoading(true);
     const bookingData = {
       tutorName: tutorDetails.yourName,
       tutorialId: tutorDetails._id,
@@ -16,9 +19,10 @@ const TutorDetails = () => {
       image: tutorDetails.tutorialImageUrl || "https://placehold.co/160x160/cbd5e1/2d3748?text=No+Image",
       pricePerHour: tutorDetails.pricePerHour,
       language: tutorDetails.language,
+      date: new Date().toLocaleDateString(),
     }
     try {
-      const res = fetch('http://localhost:4000/book-tutor', {
+      const res = await fetch('http://localhost:4000/book-tutor', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -28,20 +32,20 @@ const TutorDetails = () => {
       const data = await res.json();
 
       if (data.acknowledged) {
-        bookingData({
-          tutorName: user?.displayName || '',
-          tutorEmail: user?.email || '',
-          tutorialImageUrl: '',
-          language: '',
-          pricePerHour: '',
-          description: '',
-        });
+        /*  bookingData({
+           tutorName: user?.displayName || '',
+           tutorEmail: user?.email || '',
+           tutorialImageUrl: '',
+           language: '',
+           pricePerHour: '',
+           description: '',
+         }); */
 
         Swal.fire({
           position: 'top-end',
           icon: 'success',
-          title: 'Tutorial added successfully!',
-          text: 'Thanks for sharing your skills!',
+          title: 'Tutor booked successfully!',
+          text: 'Thanks !',
           showConfirmButton: false,
           timer: 2000,
         });
@@ -165,16 +169,15 @@ const TutorDetails = () => {
               </ul>
 
               {/* Login/Booking Button */}
-              <button className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-6 rounded-lg transition duration-300 ease-in-out transform hover:scale-105 shadow-md" >
-                {
-                  user ? (
-                    <span onClick={handleBooking}>Book Now</span>
-                  ) : (
-                    <span>Login to Book</span>
-                  )
-                }
-
+              <button
+                onClick={user ? handleBooking : null}
+                disabled={!user || isLoading}
+                className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-6 rounded-lg transition duration-300 ease-in-out transform hover:scale-105 shadow-md"
+              >
+                {isLoading ? 'Booking...' : user ? 'Book Now' : 'Login to Book'}
               </button>
+
+
 
               {/* Cancellation Policy */}
               <p className="text-gray-500 text-xs mt-4 text-center">
