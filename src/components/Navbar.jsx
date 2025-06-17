@@ -11,7 +11,7 @@ const Navbar = () => {
   //console.log(user);
 
   return (
-    <header className='bg-primary py-4' >
+    <header className=' py-4' >
       <div className='flex justify-between items-center bg-white p-4 md:w-9/12 w-11/12 mx-auto rounded-full'>
         <div className='font-bold text-primary text-3xl'>
           <span className='md:hidden block text-2xl' onClick={() => setShowMenu(!showMenu)}><FaBarsStaggered /></span>
@@ -71,33 +71,36 @@ const Navbar = () => {
           </div>
           {
             user ? (
-              <div className="dropdown dropdown-end">
-                <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
-                  <div className="avatar cursor-pointer" style={{ position: "relative", zIndex: 50 }}>
-                    <div
-                      className="w-10 rounded-full"
-                      data-tooltip-id="user-tooltip"
-                      data-tooltip-content={`Hello, ${user.displayName || "User"}!`}
-                      style={{ zIndex: 50 }}
-                    >
-                      <img src={user?.photoURL} alt="User Avatar" />
-                    </div>
+              <>
+                <div className="dropdown dropdown-end">
+                  <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
+                    <div className="avatar cursor-pointer" style={{ position: "relative", zIndex: 50 }}>
+                      <div
+                        className="w-10 rounded-full"
+                        data-tooltip-id="user-tooltip"
+                        data-tooltip-content={`Hello, ${user.displayName || "User"}!`}
+                        style={{ zIndex: 50 }}
+                      >
+                        <img src={user?.photoURL} alt="User Avatar" />
+                      </div>
 
+                    </div>
                   </div>
+                  <ul
+                    tabIndex={0}
+                    className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
+                    <li>
+                      <a className="justify-between">
+                        Profile
+                        <span className="badge">New</span>
+                      </a>
+                    </li>
+                    <li><a>Settings</a></li>
+                    <li onClick={() => logOut()}><a>Logout</a></li>
+                  </ul>
                 </div>
-                <ul
-                  tabIndex={0}
-                  className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
-                  <li>
-                    <a className="justify-between">
-                      Profile
-                      <span className="badge">New</span>
-                    </a>
-                  </li>
-                  <li><a>Settings</a></li>
-                  <li onClick={() => logOut()}><a>Logout</a></li>
-                </ul>
-              </div>
+                <button className='px-4 py-2 border-gray-100 cursor-pointer bg-[#4e45d4] rounded-4xl text-white' onClick={() => logOut()}>Logout</button>
+              </>
 
             ) : (
               <div className='bg-primary py-1 px-4 text-white rounded-full'>
