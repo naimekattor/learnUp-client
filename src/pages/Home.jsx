@@ -65,7 +65,7 @@ export default function Home() {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link to="/find-tutors">
-                <button size="lg" className="bg-white text-blue-600 hover:bg-gray-100">
+                <button size="lg" className="px-8 py-4 border-gray-100 cursor-pointer bg-white rounded-4xl text-[#4a48d5] font-medium hover:bg-gray-100">
                   Find Tutors
                 </button>
               </Link>
@@ -73,7 +73,7 @@ export default function Home() {
                 <button
                   size="lg"
                   variant="outline"
-                  className="border-2 border-white text-white hover:bg-white hover:text-blue-600"
+                  className="px-8 py-4 border-gray-100 cursor-pointer bg-white font-medium rounded-4xl text-[#4a48d5]  hover:bg-white hover:text-blue-600"
                 >
                   Become a Tutor
                 </button>
