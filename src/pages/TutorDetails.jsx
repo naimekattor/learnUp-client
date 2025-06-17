@@ -1,16 +1,65 @@
 import React, { useContext } from 'react';
 import { AuthContext } from '../context/AuthProvider';
 import { useLoaderData } from 'react-router';
+import Swal from 'sweetalert2';
 
 // Main App component
 const TutorDetails = () => {
   const { user } = useContext(AuthContext);
   const tutorDetails = useLoaderData();
 
-  const handleBooking = () => {
+  const handleBooking = async () => {
     const bookingData = {
-      tutorName: 'naim'
+      tutorName: tutorDetails.yourName,
+      tutorialId: tutorDetails._id,
+      tutorEmail: tutorDetails.email,
+      image: tutorDetails.tutorialImageUrl || "https://placehold.co/160x160/cbd5e1/2d3748?text=No+Image",
+      pricePerHour: tutorDetails.pricePerHour,
+      language: tutorDetails.language,
     }
+    try {
+      const res = fetch('http://localhost:4000/book-tutor', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(bookingData),
+      })
+      const data = await res.json();
+
+      if (data.acknowledged) {
+        bookingData({
+          tutorName: user?.displayName || '',
+          tutorEmail: user?.email || '',
+          tutorialImageUrl: '',
+          language: '',
+          pricePerHour: '',
+          description: '',
+        });
+
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: 'Tutorial added successfully!',
+          text: 'Thanks for sharing your skills!',
+          showConfirmButton: false,
+          timer: 2000,
+        });
+      } else {
+        Swal.fire({
+          title: 'Something went wrong',
+          text: data.message || 'Please try again later.',
+          icon: 'error',
+        });
+      }
+    } catch (error) {
+      Swal.fire({
+        title: 'Network Error',
+        text: error.message || 'Unable to submit tutorial.',
+        icon: 'error',
+      });
+    }
+
   }
   return (
     <div className="min-h-screen bg-gray-100 py-8 px-4 sm:px-6 lg:px-8 font-sans">
