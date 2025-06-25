@@ -1,6 +1,6 @@
 # 🌍 Language Exchange – Online Tutor Booking Platform | LearnUp
 
-![LearnUp Screenshot](./learnup-screenshot.jpeg)
+![LearnUp Screenshot](./learnuphome.jpeg)
 
 ## 📝 Overview
 
