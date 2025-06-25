@@ -1,179 +1,119 @@
-# 🌐 Language Exchange – Online Tutor Booking Platform LearnUp
+# 🌍 Language Exchange – Online Tutor Booking Platform | LearnUp
 
-An online platform for users to browse, book, and review language tutors. Users can also become tutors themselves by adding tutorial listings. Built with modern web technologies and includes secure authentication, protected routes, and dynamic user interactions.
+![LearnUp Screenshot](./learnup-screenshot.jpeg)
 
----
+## 📝 Overview
 
-## 🔗 Live Link
-
-_([LearnUp](https://friendly-beignet-ea5754.netlify.app/)_
+**LearnUp** is a dynamic online platform that allows users to browse, book, and review language tutors. Users can also register as tutors to list their own tutorials. Built with React and secured via Firebase and JWT authentication, the platform includes real-time features, protected routes, and an intuitive user interface for seamless interaction between students and tutors.
 
 ---
 
-## 🧭 Features
+## 🚀 Live Demo
 
-### 🔝 Navbar
-
-- **Website Name/Logo**: Reflects the platform’s purpose.
-- **Navigation Links**:
-  - Home
-  - Find Tutors
-  - Add Tutorials
-  - My Tutorials
-  - My Booked Tutors
-- **Conditional Auth Buttons**:
-  - **Login**: Shows when not authenticated.
-  - **Logout** & **Profile Picture**: Visible when logged in.
-  - **Tooltip on Hover**: Displays user’s name.
+🔗 [Visit Live Site](https://friendly-beignet-ea5754.netlify.app/)
 
 ---
 
-### 🏠 Home Page
+## ⚙️ Technologies Used
 
-- **Banner**: Carousel with relevant images.
-- **Stats Section**:
-  - Total Tutors
-  - Total Reviews
-  - Supported Languages
-  - Total Users
-- **Language Category Cards**:
-  - 9+ categories
-  - Each card contains:
-    - Icon
-    - Language Name
-    - Arrow Icon
-  - Clicking redirects to `/find-tutors/:category`
-- **Additional Sections**:
-  - At least two extra homepage sections related to tutoring/language learning.
+- React
+- Tailwind CSS
+- React Router
+- Node.js
+- Express.js
+- MongoDB
+- Firebase Authentication
+- JWT (JSON Web Token)
 
 ---
 
-### 🔍 Find Tutors Page
+## 🌟 Key Features
 
-- Route: `/find-tutors`
-- Displays all tutors added via the Add Tutorials page.
-- Includes search/filter options.
-- Clicking **Details** leads to: `/tutor/:details` (Private route)
-
----
-
-### 🧑‍🏫 Tutor Details Page _(Private Route)_
-
-- Route: `/tutor/:details`
-- Shows:
-  - Name
-  - Image
-  - Language
-  - Description
-  - Price
-  - Reviews
-  - **Book Button**
-- On booking, saves a record in the database:
-  - `tutorId`, `image`, `language`, `price`, `tutorEmail`, `email` (user)
+- 🔍 Search and filter tutors by category, skills, or language
+- 📅 Booking system with real-time database updates
+- 🧑‍🏫 Add, update, and delete tutorial listings (CRUD)
+- 🔐 Google Sign-In and JWT-based route protection
+- 📝 Users can post reviews for tutors
+- 🎨 Modern and responsive UI
 
 ---
 
-### 📚 My Booked Tutors _(Private Route)_
+## 📦 Dependencies
 
-- Lists all tutors the user has booked.
-- Displays:
-  - Name
-  - Image
-  - Language
-  - Price
-  - **Review Button** (Increases review count by 1 using `$inc`)
+```json
+"@tailwindcss/vite": "^4.1.10",
+"@tanstack/react-query": "^5.80.7",
+"firebase": "^11.9.1",
+"lucide-react": "^0.515.0",
+"react": "^19.1.0",
+"react-dom": "^19.1.0",
+"react-icons": "^5.5.0",
+"react-router": "^7.6.2",
+"react-tooltip": "^5.29.1",
+"sweetalert2": "^11.22.0",
+"tailwindcss": "^4.1.10",
+"wouter": "^2.8.0-alpha.2"
+```
+🖥️ Getting Started / Local Setup
+## 1.Clone the repository
+```json
+git clone https://github.com/naimekattor/learnUp-client.git
+cd hireme
+```
+## 2.Install dependencies
+```json
+npm install
 
----
+```
+## 3.Run the development server
+```json
+npm run dev
+```
+## 📌 Update Instructions
+Pull latest changes from the main branch:
+```json
+git pull origin main
 
-### ➕ Add Tutorials _(Private Route)_
+```
+## Reinstall new dependencies if added:
+```json
+npm install
 
-- Form Fields:
-  - User Name (auto-filled)
-  - Email (auto-filled)
-  - Tutorial Image
-  - Language
-  - Price
-  - Description
-  - Review (default 0)
-- On submit: Saves tutorial to database.
+```
+## 🤝 Contribution Guide
+Fork the repository
 
----
+Create a new branch: git checkout -b feature-name
 
-### 📄 My Tutorials _(Private Route)_
+Make your changes and commit: git commit -m "Your message"
 
-- Lists tutorials added by the logged-in user in a table.
-- Shows:
-  - Image
-  - Language
-  - Price
-  - Description
-  - Review
-  - **Update** and **Delete** buttons
+Push to your branch: git push origin feature-name
 
----
+Open a Pull Request
 
-## 🔐 Authentication System
+## 🛑 Known Issues / Limitations
+JWT tokens expire quickly; refresh mechanism not yet added
 
-### ✅ Login Page
+No real-time notifications yet for tutor bookings
 
-- Email & Password login
-- Google Sign-In
-- Link to Registration page
-- Displays errors for invalid input
+## 📄 License
+This project is licensed under the MIT License.
 
-### 📝 Registration Page
+## 🙌 Acknowledgements
+Firebase
 
-- Fields:
-  - Name
-  - Email
-  - Password
-  - Photo URL
-- No email verification or reset password (can be added later)
+React Router
 
----
+SweetAlert2
 
-## ⚙️ Tech Stack
+Tailwind CSS
 
-- **Frontend**: React, React Router, Tailwind CSS
-- **Backend**: Node.js, Express (if applicable)
-- **Database**: MongoDB
-- **Auth**: Firebase Authentication (Email/Password, Google)
-- **Deployment**: Vercel / Render / Netlify
+Special thanks to my mentors and the open-source community!
 
----
+## 📬 Contact
+Feel free to reach out if you have questions, suggestions, or collaboration ideas.
 
-## 📁 Folder Structure (Suggested)
-
-src/
-├── components/ # Reusable UI components
-├── pages/ # Route-based pages
-├── routes/ # Route configuration
-├── hooks/ # Custom hooks
-├── services/ # API functions
-├── utils/ # Helper utilities
-├── App.jsx
-├── main.jsx
-└── index.css
-
----
-
-## 🚧 To Do
-
-- [ ] Add reset password feature (optional)
-- [ ] Add email verification (optional)
-- [ ] Improve UI/UX polish
-- [ ] Add testing (unit/integration)
-
----
-
-## 🧑‍💻 Author
-
-**Naim Hossen**  
-[Portfolio](https://naim-portfolio-delta.vercel.app/)  
-_Passionate frontend developer with a goal to lead a SaaS company._
-
----
-
-## 🛡️ License
-
-This project is for educational/demo purposes only. Not intended for production without proper security review.
+Naim Hossen
+📧 Email: naimekattor@gmail.com
+🌐 Portfolio: https://naim-portfolio-delta.vercel.app
+💼 LinkedIn: linkedin.com/in/naimekattor
